@@ -61,7 +61,6 @@ if not search_tools:
 research_agent = create_react_agent(
     model=app_config.search_tool_model,
     tools=search_tools,
-    name="research-agent",
     prompt=RESEARCHER_PROMPT
 )
 
@@ -72,7 +71,6 @@ research_agent = create_react_agent(
 report_writer_agent = create_react_agent(
     model=app_config.reasoning_model,
     tools=[],
-    name="report-writer-agent",
     prompt=REPORT_WRITER_PROMPT
 )
 
@@ -83,7 +81,6 @@ report_writer_agent = create_react_agent(
 web_coordinator = create_react_agent(
     model=app_config.reasoning_model,
     tools=[],
-    name="web-coordinator",
     prompt=WEB_COORDINATOR_PROMPT
 )
 

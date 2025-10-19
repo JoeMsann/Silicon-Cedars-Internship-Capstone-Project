@@ -8,18 +8,9 @@ import sqlite3
 import csv
 from pathlib import Path
 from typing import Optional, Tuple, List, Dict, Any
-
-# DEBUG: Print what's actually available
-print("=" * 80)
-print("DEBUG: Checking langchain.agents module contents")
-try:
-    import langchain.agents as agents_module
-    print(f"Available in langchain.agents: {dir(agents_module)}")
-except Exception as e:
-    print(f"Error importing langchain.agents: {e}")
-print("=" * 80)
-
-# Now try the imports
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain_core.prompts import PromptTemplate
+from langchain_core.tools import tool
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import tool

@@ -65,25 +65,46 @@ research_agent = create_react_agent(
 )
 
 # =============================================================================
+# RESEARCH AGENT WITH DUAL SEARCH CAPABILITY
+# =============================================================================
+
+# Bind prompt to model as system message
+research_model = app_config.search_tool_model.bind(
+    system=RESEARCHER_PROMPT
+)
+
+research_agent = create_react_agent(
+    model=research_model,
+    tools=search_tools
+)
+
+# =============================================================================
 # REPORT WRITER AGENT (NO TOOLS NEEDED)
 # =============================================================================
 
+# Bind prompt to model as system message
+report_writer_model = app_config.reasoning_model.bind(
+    system=REPORT_WRITER_PROMPT
+)
+
 report_writer_agent = create_react_agent(
-    model=app_config.reasoning_model,
-    tools=[],
-    prompt=REPORT_WRITER_PROMPT
+    model=report_writer_model,
+    tools=[]
 )
 
 # =============================================================================
 # WEB COORDINATOR AGENT (NO TOOLS NEEDED)
 # =============================================================================
 
-web_coordinator = create_react_agent(
-    model=app_config.reasoning_model,
-    tools=[],
-    prompt=WEB_COORDINATOR_PROMPT
+# Bind prompt to model as system message
+coordinator_model = app_config.reasoning_model.bind(
+    system=WEB_COORDINATOR_PROMPT
 )
 
+web_coordinator = create_react_agent(
+    model=coordinator_model,
+    tools=[]
+)
 # =============================================================================
 # COORDINATOR PROMPT TEMPLATE
 # =============================================================================

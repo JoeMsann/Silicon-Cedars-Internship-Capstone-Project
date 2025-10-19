@@ -1,103 +1,111 @@
-# 🎓 Multi-Modal AI Enterprise Assistant
+# 🤖 AI-Powered Multi-Agent System with LangGraph
 
-> **A production-ready LangGraph-based multi-agent orchestration system that intelligently routes user queries to specialized AI agents for seamless enterprise data access.**
+> **Enterprise-grade conversational AI system** combining SQL database queries, document retrieval, and natural language processing through intelligent agent orchestration.
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![LangChain](https://img.shields.io/badge/LangChain-🦜-green.svg)](https://github.com/langchain-ai/langchain)
-[![LangGraph](https://img.shields.io/badge/LangGraph-🕸️-orange.svg)](https://github.com/langchain-ai/langgraph)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![LangChain](https://img.shields.io/badge/LangChain-0.3.16-green.svg)](https://www.langchain.com/)
+[![Groq](https://img.shields.io/badge/Groq-Cloud-purple.svg)](https://groq.com/)
 
 ---
 
-## 📊 Executive Summary
+## 📋 Table of Contents
 
-This project provides a **unified natural language interface** to multiple enterprise data sources through an intelligent routing layer. Non-technical users can query structured databases (SQL), internal documents (RAG), and real-time web data without writing code or switching tools.
-
-**Core Innovation:** Automatic intent classification with security-first architecture, enabling:
-- 🔒 **Secure database access** with multi-layer SQL injection prevention
-- 📚 **Semantic document search** across company knowledge bases
-- 🌐 **Real-time web research** for external data needs
-- 💬 **Natural conversation** with intelligent agent recommendations
-- 📊 **Automatic visualization** of data insights
-
----
-
-## ✨ Key Features
-
-### 🎯 Intelligent Query Routing
-- **Automatic Intent Classification**: GPT OSS 20B supervisor analyzes queries and routes to the optimal agent
-- **Multi-Source Integration**: Seamlessly combines SQL databases, document stores, web search, and conversation
-- **Visualization Detection**: Automatically generates charts when queries benefit from visual representation
-
-### 🔐 Enterprise-Grade Security
-- **Read-Only SQL Access**: Whitelist-based validation blocks all write operations
-- **SQL Injection Prevention**: Multi-layer protection with comment stripping and statement validation
-- **Secure Architecture**: No direct database modifications, all queries validated before execution
-
-### 🤖 Specialized AI Agents
-
-#### 1. **SQL Agent** (Production-Ready ✅)
-- Natural language → SQL query generation
-- Pagila DVD rental database (49,636 rows, 15 tables)
-- SQLite backend for portability
-- Complex joins, aggregations, and analytics
-
-#### 2. **RAG Agent** (Production-Ready ✅)
-- Semantic search over 5 internal documents
-- FAISS vector store with persistent caching
-- Document types: Employee Handbook, Code of Conduct, Incident Response, Company Policy, Procedures
-- Citation-backed responses with source attribution
-
-#### 3. **Conversation Agent** (Functional ✅)
-- Friendly, approachable personality
-- System capability explanations
-- Query refinement assistance
-- Intelligent fallback for non-data questions
-
-#### 4. **Visualizer Agent** (Fully Implemented ✅)
-- Automatic chart type selection (bar, line, pie, scatter, area)
-- Responsive Chart.js HTML generation
-- Color palette optimization
-- File-based persistence with browser preview
-
-#### 5. **Web Research Team** (Architecture Complete ⚠️)
-- Multi-node subgraph (Coordinator → Researcher → Report Writer)
-- External data synthesis and competitive analysis
-- *Note: Currently blocked by Tavily API issues; replacement in progress*
+- [Overview](#-overview)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Usage Examples](#-usage-examples)
+- [Known Issues & Limitations](#-known-issues--limitations)
+- [Testing](#-testing)
+- [Configuration](#-configuration)
+- [Security](#-security)
+- [Performance](#-performance)
+- [Contributing](#-contributing)
+- [Roadmap](#-roadmap)
+- [License](#-license)
 
 ---
 
-## 🏗️ System Architecture
+## 🎯 Overview
+
+This project demonstrates a **production-ready multi-agent system** built with **LangChain** and **LangGraph**, orchestrating specialized AI agents to handle diverse user queries through natural language processing. The system intelligently routes requests to the appropriate agent and provides accurate, context-aware responses.
+
+### Key Capabilities
+
+- 🗄️ **Natural Language to SQL**: Query business data using plain English
+- 📚 **Semantic Document Search**: Retrieve information from company documents
+- 💬 **Conversational AI**: Friendly chat interface for general queries
+- 🌐 **Web Research**: ⚠️ Multi-agent web search (Work in Progress)
+- 📊 **Data Visualization**: ⚠️ Automatic chart generation (Work in Progress)
+
+---
+
+## ✨ Features
+
+### ✅ Production-Ready Components
+
+| Feature | Status | Description |
+|---------|--------|-------------|
+| **SQL Agent** | ✅ **COMPLETE** | Natural language database queries with security validation |
+| **RAG Agent** | ✅ **COMPLETE** | Semantic search across 5 company documents using FAISS |
+| **Conversation Agent** | ✅ **COMPLETE** | Friendly chat interface (stateless) |
+| **Security Layer** | ✅ **COMPLETE** | Multi-layer SQL injection prevention |
+| **Test Suite** | ✅ **COMPLETE** | 5/5 SQL agent tests passing |
+| **LangGraph Workflow** | ✅ **COMPLETE** | Supervisor-based intent routing |
+
+### ⚠️ Work in Progress Components
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Web Research Team** | ⚠️ **BLOCKED** | DuckDuckGo/Wikipedia integration in progress |
+| **Visualizer Agent** | ⚠️ **PLACEHOLDER** | Chart.js generation framework ready |
+| **RAG Visualization** | ⚠️ **NOT FUNCTIONAL** | Currently no company documents support visualization data |
+| **Streamlit Frontend** | ⚠️ **IN DEVELOPMENT** | Web interface coming soon |
+
+---
+
+## 🏗️ Architecture
+
+### System Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      User Query (Natural Language)               │
-└────────────────────────────┬────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    User Input (Natural Language)            │
+└────────────────────────────┬────────────────────────────────┘
+                             │
                              ▼
                     ┌─────────────────┐
-                    │  Main Supervisor │ (GPT OSS 20B)
-                    │  Intent Classifier│
-                    └────────┬──────────┘
+                    │   Supervisor    │ ← Classifies intent
+                    │   (Reasoning)   │   (sql|rag|conversation|web)
+                    └────────┬────────┘
                              │
-         ┌───────────────────┼───────────────────┐
-         ▼                   ▼                   ▼
-   ┌──────────┐        ┌──────────┐       ┌──────────┐
-   │SQL Agent │        │RAG Agent │       │Conv Agent│
-   │(Database)│        │(Docs)    │       │(Chat)    │
-   └────┬─────┘        └────┬─────┘       └────┬─────┘
-        │                   │                   │
-        └───────────────────┴───────────────────┘
-                             │
-                     ┌───────▼────────┐
-                     │   Visualizer   │ (Conditional)
-                     │   Agent        │
-                     └────────────────┘
-                             │
-                             ▼
-                      ┌─────────────┐
-                      │   Response  │
-                      │(Text/HTML)  │
-                      └─────────────┘
+        ┌────────────────────┼────────────────────┐
+        │                    │                    │
+        ▼                    ▼                    ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│  SQL Agent   │    │  RAG Agent   │    │Conversation  │
+│              │    │              │    │    Agent     │
+│ Query Pagila │    │ Search Docs  │    │  General AI  │
+│   Database   │    │ (FAISS)      │    │    Chat      │
+└──────┬───────┘    └──────┬───────┘    └──────┬───────┘
+       │                   │                    │
+       │                   │                    │
+       └───────────────────┴────────────────────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │ Visualizer   │ (Work in Progress)
+                    │   Agent      │
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │  Response   │
+                    │(Text/HTML)  │
+                    └─────────────┘
 ```
 
 ### State Management (LangGraph)
@@ -117,7 +125,7 @@ class WorkflowState(TypedDict):
 ### Core Frameworks
 - **LangChain** (0.3.16): Agent orchestration and tool integration
 - **LangGraph** (0.2.62): State-based workflow management
-- **Streamlit** (1.41.1): Web interface and chart rendering
+- **Streamlit** (1.41.1): Web interface (coming soon)
 
 ### AI Models (via Groq Cloud)
 | Agent | Model | Temperature | Purpose |
@@ -171,14 +179,14 @@ capstone-project/
 │   ├── 📄 workflow.py              # Main LangGraph orchestration
 │   │
 │   └── 📂 agents/
-│       ├── 📄 sql_agent.py         # Database query agent ✅
-│       ├── 📄 rag_agent.py         # Document retrieval agent ✅
-│       ├── 📄 conversation_agent.py # Chat interface agent ✅
-│       ├── 📄 visualizer_agent.py  # Chart generation agent ✅
-│       └── 📄 web_team.py          # Web research subgraph ⚠️
+│       ├── 📄 sql_agent.py         # ✅ Database query agent
+│       ├── 📄 rag_agent.py         # ✅ Document retrieval agent
+│       ├── 📄 conversation_agent.py # ✅ Chat interface agent
+│       ├── 📄 visualizer_agent.py  # ⚠️ Chart generation (WIP)
+│       └── 📄 web_team.py          # ⚠️ Web research (WIP)
 │
 ├── 📂 front-end/
-│   └── 📄 app.py                   # Streamlit web application
+│   └── 📄 app.py                   # ⚠️ Streamlit application (WIP)
 │
 └── 📂 tests/
     └── 📄 test_sql_agent.py        # SQL agent test suite (5/5 passing)
@@ -226,72 +234,54 @@ capstone-project/
    initialize_database()
    ```
 
-6. **Build the RAG index** (first run only)
-   ```python
-   from src.agents.rag_agent import initialize_vector_store
-   initialize_vector_store(force_rebuild=True)
+6. **Run the application**
+   ```bash
+   streamlit run front-end/app.py
    ```
 
-### Running the Application
+### 🌐 Web Interface (Coming Soon!)
 
-#### Option 1: Streamlit Web Interface (Recommended)
-```bash
-streamlit run front-end/app.py
-```
-- Opens at `http://localhost:8501`
-- Includes chat interface and automatic chart rendering
-
-#### Option 2: Python Script (CLI)
-```python
-from src.workflow import workflow, WorkflowState
-
-# Execute a query
-result = workflow.invoke({
-    "user_input": "Show me top 5 customers by revenue",
-    "intent": "conversation",
-    "needs_visualization": False,
-    "response": "",
-    "messages": []
-})
-
-print(result["response"])
-```
-
-#### Option 3: LangGraph Studio (Development)
-```bash
-# Install LangGraph CLI
-pip install langgraph-cli
-
-# Launch Studio
-langgraph dev
-```
-- Visual workflow debugging
-- Step-by-step execution tracing
-- State inspection at each node
+**A hosted web application will be available soon**, allowing you to interact with the chatbot directly through your browser without needing to install anything locally. Stay tuned for the deployment announcement!
 
 ---
 
-## 💡 Example Queries
+## 💡 Usage Examples
 
-### SQL Database Queries
+### SQL Queries (Database)
 ```
-✅ "What are the top 10 movies with the highest rental rates?"
-✅ "Show me monthly rental trends for 2024"
-✅ "Which films have the highest rental rates?"
-✅ "List all customers in Canada with their email addresses"
-✅ "Create a chart of revenue by store location"
+✅ "Show me the top 5 customers by total payment amount"
+✅ "What are all the action movies in our inventory?"
+✅ "Find customers who rented more than 30 films"
+✅ "List all stores with their total revenue"
 ```
 
-(Please note that the SQL agent is currently academically challenged which means it might not understand some requests. Make sure that you are using the correct Pagila terms)
+**⚠️ Known Issue: SQL Agent Limitations**
 
-### Document Retrieval (RAG)
+The SQL agent can sometimes **take queries too literally**, which may cause it to get stuck or fail to execute certain requests. For example:
+
+- **Overly specific interpretations**: If you ask "show me customers in city X", it might look for an exact city name match rather than using fuzzy matching
+- **Complex aggregations**: Multi-level GROUP BY queries with multiple JOINs can sometimes cause timeouts
+- **Ambiguous requests**: Questions like "give me the best customers" without clear metrics may confuse the agent
+
+**Workarounds:**
+- Be as specific as possible in your queries (e.g., "top 10 customers by total payment amount")
+- Break complex questions into simpler sub-queries
+- If the agent seems stuck, try rephrasing your question
+
+This behavior is **work in progress** and will be improved in future updates with better query parsing and error recovery.
+
+---
+
+### RAG Queries (Company Documents)
 ```
-✅ "What is our policy on accepting gifts from vendors?"
+✅ "What is our remote work policy?"
 ✅ "Summarize the incident response procedure for ransomware"
 ✅ "What are the eligibility requirements for remote work?"
 ✅ "Explain the process for requesting leave approval"
 ✅ "What does our code of conduct say about conflicts of interest?"
 ```
+
+---
 
 ### General Conversation
 ```
@@ -299,13 +289,108 @@ langgraph dev
 ✅ "What data sources can you access?"
 ✅ "I need help finding information about our travel policy"
 ✅ "Can you explain the difference between SQL and RAG queries?"
-✅ "What's the best way to visualize sales trends?"
 ```
+
+---
 
 ### Web Research
 ```
-⏳ Ask virtually anything but make sure to specify web searching
+⚠️ Web research functionality is currently under development
 ```
+
+---
+
+### Data Visualization
+```
+⚠️ Visualization is currently not functional with RAG queries
+```
+
+**⚠️ RAG Visualization Limitation**
+
+Currently, **visualization does not work with RAG queries** because:
+- The company documents in the knowledge base do not contain structured numerical data suitable for charts
+- The RAG agent is designed for text-based information retrieval, not data analysis
+- Chart generation requires tabular data (which comes from SQL queries), not prose text
+
+**What works:**
+- ✅ SQL query results can be visualized (when visualization agent is complete)
+- ✅ RAG queries return text-based answers from documents
+
+**What doesn't work:**
+- ❌ Asking "visualize the remote work policy" (no numerical data to chart)
+- ❌ Trying to create graphs from document content
+
+This is expected behavior and **not a bug**. Visualization features are specifically designed for SQL query results containing numerical data. RAG queries will continue to provide excellent text-based responses for policy and procedure questions.
+
+---
+
+## 🛑 Known Issues & Limitations
+
+### Current Limitations
+
+**⚠️ ALL FEATURES MARKED AS "WORK IN PROGRESS" ARE ACTIVELY BEING DEVELOPED**
+
+1. **SQL Agent Behavior Issues**
+   - **Problem:** The SQL agent sometimes interprets queries too literally, causing it to block or fail
+   - **Impact:** Complex or ambiguous queries may not execute properly
+   - **Status:** 🔧 **Work in Progress** - Improving query parsing and error handling
+   - **Workaround:** Be specific in your queries and break complex questions into simpler parts
+
+2. **RAG Visualization Not Functional**
+   - **Problem:** Visualization does not work with RAG queries
+   - **Reason:** Company documents contain no numerical data suitable for charts
+   - **Status:** ⏳ **Expected Behavior** - This is by design, not a bug
+   - **Workaround:** Use SQL queries for data that needs visualization
+
+3. **Web Research Agent**
+   - **Problem:** DuckDuckGo/Wikipedia integration incomplete
+   - **Impact:** Web search functionality not available
+   - **Status:** 🔧 **Work in Progress** - Implementing search tool integration
+   - **Workaround:** Use conversation agent for general information
+
+4. **Visualizer Agent**
+   - **Problem:** Chart.js generation not yet implemented
+   - **Impact:** No automatic chart creation from SQL results
+   - **Status:** 🔧 **Work in Progress** - Framework ready, generation logic in development
+   - **Workaround:** SQL query results returned as formatted text tables
+
+5. **Streamlit Frontend**
+   - **Problem:** Web interface incomplete
+   - **Impact:** No user-friendly GUI currently available
+   - **Status:** 🔧 **Work in Progress** - Interface design and deployment in progress
+   - **Update:** **Web application coming soon!** You'll be able to interact with the chatbot directly through a hosted website without local installation
+
+6. **Conversation Memory**
+   - **Problem:** Agent is stateless between queries
+   - **Impact:** No context retention across messages
+   - **Status:** 🔧 **Work in Progress** - Memory buffer planned in next update
+
+---
+
+### Troubleshooting
+
+**Issue:** `ModuleNotFoundError: No module named 'src'`
+```bash
+# Solution: Add project root to PYTHONPATH
+export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+# Or run from project root
+cd capstone-project && python front-end/app.py
+```
+
+**Issue:** `No such table: actor` (SQL errors)
+```python
+# Solution: Rebuild database
+from src.agents.sql_agent import initialize_database
+initialize_database()
+```
+
+**Issue:** `Index file not found` (RAG errors)
+```python
+# Solution: Rebuild FAISS index
+from src.agents.rag_agent import initialize_vector_store
+initialize_vector_store(force_rebuild=True)
+```
+
 ---
 
 ## 🧪 Testing
@@ -323,16 +408,6 @@ pytest tests/test_sql_agent.py -v
 - ✅ Complex multi-table joins
 
 **Test Results:** 5/5 passing
-
-### Adding New Tests
-```python
-# tests/test_rag_agent.py
-def test_document_retrieval():
-    from src.agents.rag_agent import search_documents
-    results = search_documents("remote work policy")
-    assert len(results) > 0
-    assert "handbook" in results[0].metadata["source"]
-```
 
 ---
 
@@ -358,19 +433,6 @@ class Config:
     conversation_model = ChatGroq(model="moonshotai/kimi-k2-instruct-0905")
     reasoning_model = ChatGroq(model="openai/gpt-oss-20b")   # Supervisor
 ```
-
-### Database Settings
-- **Path:** `data/pagila/pagila.db`
-- **Type:** SQLite 3
-- **Size:** ~8MB
-- **Rebuild:** Delete `pagila.db` and run `initialize_database()`
-
-### Vector Store Settings
-- **Path:** `data/index/index.faiss`
-- **Embeddings:** `sentence-transformers/all-MiniLM-L6-v2`
-- **Chunk Size:** 1000 characters
-- **Overlap:** 200 characters
-- **Rebuild:** Call `initialize_vector_store(force_rebuild=True)`
 
 ---
 
@@ -401,54 +463,10 @@ class Config:
 | SQL Query | ~1-2s | ❌ |
 | RAG Retrieval | ~0.5-1s | ✅ (FAISS disk cache) |
 | Conversation | ~1-1.5s | ❌ |
-| Visualization | ~2-3s | ✅ (HTML file cache) |
+| Visualization | ~2-3s | ✅ (HTML file cache - WIP) |
 | Supervisor Routing | ~0.5s | ❌ |
 
-**Optimization Opportunities:**
-- SQL query result caching (Redis/in-memory)
-- Conversation history summarization
-- Pre-computed aggregations for common queries
-
 ---
-
-## 🐛 Known Issues & Limitations
-
-### Current Limitations
-1. **Web Research Agent:** Blocked by Tavily API integration issues
-   - **Workaround:** Use conversation agent for web-related queries
-   - **Fix in Progress:** DuckDuckGo/Wikipedia replacement
-
-2. **Conversation Memory:** Agent is stateless between queries
-   - **Impact:** No context retention across messages
-   - **Planned Fix:** Conversation buffer in Phase 1 roadmap
-
-3. **Visualization Errors:** Non-numeric data causes chart generation to fail
-   - **Workaround:** System gracefully falls back to text response
-   - **Expected Behavior:** Error handling with user-friendly messages
-
-### Troubleshooting
-
-**Issue:** `ModuleNotFoundError: No module named 'src'`
-```bash
-# Solution: Add project root to PYTHONPATH
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-# Or run from project root
-cd capstone-project && python front-end/app.py
-```
-
-**Issue:** `No such table: actor` (SQL errors)
-```python
-# Solution: Rebuild database
-from src.agents.sql_agent import initialize_database
-initialize_database()
-```
-
-**Issue:** `Index file not found` (RAG errors)
-```python
-# Solution: Rebuild FAISS index
-from src.agents.rag_agent import initialize_vector_store
-initialize_vector_store(force_rebuild=True)
-```
 
 ## 🤝 Contributing
 
@@ -470,6 +488,28 @@ Contributions are welcome! Please follow these guidelines:
 
 ---
 
+## 🗺️ Roadmap
+
+### Phase 1 (Current Sprint) 🔄
+- [ ] Complete web research agent (DuckDuckGo/Wikipedia integration)
+- [ ] Implement visualizer agent (Chart.js generation)
+- [ ] Add conversation memory buffer
+- [ ] Deploy Streamlit frontend
+
+### Phase 2 (Next Quarter)
+- [ ] Add more RAG document sources
+- [ ] Implement caching layer (Redis)
+- [ ] Add conversation history persistence
+- [ ] Performance optimizations
+
+### Phase 3 (Future)
+- [ ] Multi-database support
+- [ ] Custom visualization templates
+- [ ] Advanced analytics dashboard
+- [ ] Mobile-responsive design
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -488,8 +528,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-- **Project Maintainer:** [Joe Al Msann]
-- **Email:** [18joe.msane18@gmail.com]
+- **Project Maintainer:** Joe Al Msann
+- **Email:** 18joe.msane18@gmail.com
 
 ---
 
@@ -500,7 +540,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ✅ **Production-Ready SQL Agent:** Comprehensive test coverage (5/5 passing)  
 ✅ **Semantic Document Search:** FAISS vector store with persistent caching  
 ✅ **Natural Language Interface:** User-friendly query processing  
-✅ **Automatic Visualization:** Chart.js integration with Chart type detection  
+⚠️ **Automatic Visualization:** Framework ready, implementation in progress  
 ✅ **Extensible Architecture:** Easy to add new agents or data sources  
 ✅ **Enterprise-Grade Features:** Error handling, logging, observability  
 

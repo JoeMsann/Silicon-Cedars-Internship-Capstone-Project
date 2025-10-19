@@ -3,15 +3,11 @@ RAG Agent Implementation
 Handles retrieval-augmented generation over company documents.
 """
 
-import os
 from pathlib import Path
-from typing import TypedDict, Annotated, Sequence
-from operator import add
-
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 from langgraph.prebuilt import create_react_agent
 
@@ -163,10 +159,13 @@ else:
 # =============================================================================
 # RAG AGENT CREATION
 # =============================================================================
+rag_model = app_config.rag_model.bind(
+    system=RAG_AGENT_PROMPT
+)
+
 rag_agent = create_react_agent(
-    model=app_config.rag_model,
+    model=rag_model,
     tools=tools,
-    prompt=RAG_AGENT_PROMPT
 )
 
 
@@ -316,40 +315,3 @@ def search_documents(query: str, k: int = 5):
     
     results = vectorstore.similarity_search(query, k=k)
     return results
-
-
-# =============================================================================
-# MAIN (for testing)
-# =============================================================================
-if __name__ == "__main__":
-    # Test the RAG system
-    print("=" * 60)
-    print("RAG Agent Test")
-    print("=" * 60)
-    
-    # Test query
-    test_query = "What is our policy on accepting gifts from vendors?"
-    
-    print(f"\nQuery: {test_query}")
-    print("-" * 60)
-    
-    # Test state
-    test_state = {
-        "user_input": test_query,
-        "messages": []
-    }
-    
-    # Run RAG node
-    result_state = rag_node(test_state)
-    
-    print("\nResponse:")
-    print(result_state.get("rag_response", "No response"))
-    print("=" * 60)
-    
-    # Test direct search
-    print("\nDirect Vector Store Search Results:")
-    print("-" * 60)
-    docs = search_documents(test_query, k=3)
-    for i, doc in enumerate(docs, 1):
-        print(f"\n{i}. Source: {doc.metadata.get('source', 'Unknown')}")
-        print(f"Content: {doc.page_content[:200]}...")

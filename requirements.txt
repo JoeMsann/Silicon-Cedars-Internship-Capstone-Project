@@ -1,0 +1,13 @@
+langchain
+langchain-core
+langchain-community
+langgraph
+langchain-groq
+chainlit
+psycopg2-binary
+sqlalchemy
+faiss-cpu
+sentence-transformers
+tavily-python
+python-dotenv
+langsmith

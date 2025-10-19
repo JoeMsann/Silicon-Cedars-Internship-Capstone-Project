@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>T</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      html, body { height: 100%; margin: 0; padding: 0; }
+      .wrap { display:flex; align-items:center; justify-content:center; height:100%; }
+      canvas { max-width: 96vw; max-height: 90vh; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap"><canvas id="c"></canvas></div>
+    <script>
+      const config = {"type": "bar", "data": {"labels": ["A", "B"], "datasets": [{"label": "s", "data": [1, 2]}]}, "options": {"responsive": true, "plugins": {"legend": {"position": "top"}, "title": {"display": true, "text": "T"}}}};
+      new Chart(document.getElementById('c'), config);
+    </script>
+  </body>
+</html>

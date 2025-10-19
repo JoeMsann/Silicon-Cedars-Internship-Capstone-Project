@@ -1,0 +1,49 @@
+# Keep only: src/, front-end/, data/, requirements.txt, and readme.md
+# Ignore everything else
+
+# Ignore all files and directories by default
+*
+!*/
+
+# Explicitly include what we want to keep
+!src/
+!src/**
+!front-end/
+!front-end/**
+!data/
+!data/**
+!requirements.txt
+!readme.md
+!README.md
+!.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.env
+.venv
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node modules (if any in front-end)
+node_modules/

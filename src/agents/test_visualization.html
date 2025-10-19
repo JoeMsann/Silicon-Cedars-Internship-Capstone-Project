@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show me the average rental rating for each film ca...</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chart-container {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 1000px;
+            height: 70vh;
+            max-height: 600px;
+        }
+        canvas {
+            max-height: 100%;
+        }
+        h1 {
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+            "labels": [
+                        "Family",
+                        "Drama",
+                        "New",
+                        "Travel",
+                        "Classics",
+                        "Games",
+                        "Comedy",
+                        "Documentary",
+                        "Sci-Fi",
+                        "Foreign",
+                        "Music",
+                        "Children",
+                        "Sports",
+                        "Action"
+            ],
+            "datasets": [
+                        {
+                                    "label": "avg_rental_rate",
+                                    "data": [
+                                                2.7995238095238095,
+                                                2.845263157894737,
+                                                2.8675510204081633,
+                                                2.884039735099338,
+                                                2.9083673469387756,
+                                                2.9366666666666665,
+                                                2.948041958041958,
+                                                2.99,
+                                                2.99,
+                                                3.0033333333333334,
+                                                3.0426315789473684,
+                                                3.0433333333333334,
+                                                3.072758620689655,
+                                                3.1376510067114096
+                                    ],
+                                    "backgroundColor": "#3b82f6",
+                                    "borderColor": "#3b82f6",
+                                    "borderWidth": 2,
+                                    "fill": true
+                        }
+            ]
+},
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Show me the average rental rating for each film ca...',
+                        font: { size: 18, weight: 'bold' },
+                        padding: { bottom: 30 }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0,0,0,0.8)',
+                        padding: 12,
+                        cornerRadius: 8,
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                const value = context.parsed.y !== undefined ? context.parsed.y : context.parsed;
+                                if (typeof value === 'number') {
+                                    label += value.toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+            scales: {
+                
+                y: {
+                    beginAtZero: true
+                }
+            },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

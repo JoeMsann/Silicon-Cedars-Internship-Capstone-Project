@@ -1,0 +1,15 @@
+IT Incident Response Plan
+
+Purpose: This plan outlines the procedures to identify, manage, and mitigate IT security incidents to minimize impact on business operations.
+
+    Detection & Identification: Employees or monitoring systems should promptly report any unusual activity or suspected breaches to the IT security team via the 24/7 incident hotline or ticketing system.
+
+    Containment: The IT security team will isolate affected systems to prevent further compromise. Depending on the incident, this may involve disconnecting devices from the network or applying temporary restrictions.
+
+    Eradication: Investigate the root cause and remove malicious code, unauthorized access points, or vulnerabilities. Verify that systems are clean before resuming normal operations.
+
+    Recovery: Restore systems from secure backups and monitor closely for signs of recurring issues. Communicate incident status and resolution progress to relevant stakeholders.
+
+    Post-Incident Review: Conduct a thorough analysis of the incident, document lessons learned, and update policies or safeguards accordingly to prevent future recurrence.
+
+The incident response team consists of designated personnel from IT, security, legal, and communications departments with clearly assigned roles for efficient coordination.

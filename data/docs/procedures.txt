@@ -1,0 +1,13 @@
+Standard Operating Procedures for IT Security
+
+    Access Control: All system and network access must be granted based on the principle of least privilege. User accounts are reviewed quarterly, and access rights are adjusted according to role changes or employment status updates.
+
+    Password Management: Employees must use complex passwords in accordance with the company’s password policy. Passwords are to be changed every 90 days, and multifactor authentication (MFA) is mandatory for critical systems.
+
+    Incident Reporting: Any suspected security incident, including unauthorized access, malware infection, or data breach, must be reported immediately to the IT security team through the designated incident reporting portal or hotline. Early detection and rapid response are vital.
+
+    Patch Management: The IT department will regularly apply security patches and updates for all software and hardware assets following a scheduled monthly maintenance window or immediately if a critical vulnerability arises.
+
+    Data Protection: Sensitive data must be encrypted at rest and in transit. Backups are performed daily and stored securely. Data disposal must follow secure deletion standards to prevent unauthorized recovery.
+
+    Security Training: All employees undergo mandatory cybersecurity awareness training annually, covering phishing, social engineering, safe internet practices, and company policies.

@@ -8,7 +8,7 @@ import sqlite3
 import csv
 from pathlib import Path
 from typing import Optional, Tuple, List, Dict, Any
-from langchain.agents import AgentExecutor
+from langchain.agents.agent import AgentExecutor
 from langchain.agents.react.agent import create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain.tools import tool

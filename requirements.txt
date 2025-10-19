@@ -11,3 +11,6 @@ sentence-transformers
 tavily-python
 python-dotenv
 langsmith
+duckduckgo-search
+wikipedia
+streamlit

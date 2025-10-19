@@ -47,7 +47,7 @@ if not search_tools:
     print("❌ ERROR: No search tools available! Install dependencies:")
     print("   pip install duckduckgo-search wikipedia")
     # Create dummy tool to prevent crashes
-    from langchain.tools import Tool
+    from langchain_core.tools import Tool
     search_tools = [Tool(
         name="dummy_search",
         func=lambda x: "Search functionality unavailable. Please install duckduckgo-search and wikipedia packages.",

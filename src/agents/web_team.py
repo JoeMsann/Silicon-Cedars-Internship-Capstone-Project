@@ -58,16 +58,6 @@ if not search_tools:
 # RESEARCH AGENT WITH DUAL SEARCH CAPABILITY
 # =============================================================================
 
-research_agent = create_react_agent(
-    model=app_config.search_tool_model,
-    tools=search_tools,
-    prompt=RESEARCHER_PROMPT
-)
-
-# =============================================================================
-# RESEARCH AGENT WITH DUAL SEARCH CAPABILITY
-# =============================================================================
-
 # Bind prompt to model as system message
 research_model = app_config.search_tool_model.bind(
     system=RESEARCHER_PROMPT

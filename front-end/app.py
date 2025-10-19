@@ -61,21 +61,9 @@ def run_workflow(user_input: str) -> str:
 
 def display_chart_message(message_content: str, message_index: int):
     """
-    Display a chart message with embedded HTML or clickable link.
-    
-    Args:
-        message_content: The message content containing file path info and HTML
-        message_index: Unique index for widget keys
+    Display a chart message with embedded HTML (in-memory only).
     """
-    lines = message_content.split('\n')
-    file_path = ""
-    
-    for line in lines:
-        if line.startswith("File:"):
-            file_path = line.replace("File:", "").strip()
-            break
-    
-    # Try to extract HTML content from message (if embedded)
+    # Extract HTML content from message
     html_content = None
     if "<!-- HTML_CONTENT_START -->" in message_content:
         try:
@@ -85,60 +73,24 @@ def display_chart_message(message_content: str, message_index: int):
         except (ValueError, IndexError):
             pass
     
-    # Fallback to reading from file if HTML not embedded
-    if not html_content and file_path and Path(file_path).exists():
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                html_content = f.read()
-        except Exception as e:
-            st.error(f"Error reading chart file: {e}")
-            return
-    
     if not html_content:
         st.warning("⚠️ Visualization content not available.")
-        st.code(message_content)
         return
     
     # Display success banner
     st.success("✅ Visualization created successfully!")
     
-    # Create tabs for different viewing options
-    tab1, tab2 = st.tabs(["📊 View Chart", "💾 File Info"])
+    # Embed the chart directly in Streamlit
+    components.html(html_content, height=600, scrolling=True)
     
-    with tab1:
-        # Embed the chart directly in Streamlit using iframe
-        components.html(html_content, height=600, scrolling=True)
-        
-        # Download button
-        st.download_button(
-            label="💾 Download Chart HTML",
-            data=html_content,
-            file_name=Path(file_path).name if file_path else "chart.html",
-            mime="text/html",
-            key=f"download_{message_index}"
-        )
-    
-    with tab2:
-        if file_path:
-            st.info(f"**File Name:** `{Path(file_path).name}`")
-            st.info(f"**Full Path:** `{file_path}`")
-            
-            # Button to open in default browser
-            col1, col2, col3 = st.columns([1, 1, 2])
-            with col1:
-                if st.button("🚀 Open in Browser", key=f"open_browser_{message_index}"):
-                    import webbrowser
-                    webbrowser.open(f"file://{file_path}")
-                    st.toast("Opening in default browser...", icon="✨")
-            
-            with col2:
-                # Copy path button (uses clipboard if available)
-                if st.button("📋 Copy Path", key=f"copy_path_{message_index}"):
-                    st.code(file_path, language=None)
-                    st.toast("Path displayed above - right-click to copy", icon="📋")
-        else:
-            st.info("File path not available")
-
+    # Download button for offline use
+    st.download_button(
+        label="💾 Download Chart HTML",
+        data=html_content,
+        file_name=f"chart_{message_index}.html",
+        mime="text/html",
+        key=f"download_{message_index}"
+    )
 
 # --- 5. DISPLAY CHAT HISTORY ---
 

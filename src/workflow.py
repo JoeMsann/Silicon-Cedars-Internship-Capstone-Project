@@ -518,7 +518,7 @@ def web_subgraph_node(state: WorkflowState) -> dict:
 def visualization_node(state: WorkflowState) -> dict:
     """
     Handle visualization of data.
-    Returns both file path and HTML content for flexible rendering.
+    Returns HTML content for in-memory rendering.
     """
     user_input = state["user_input"]
     intent = state["intent"]
@@ -540,17 +540,11 @@ def visualization_node(state: WorkflowState) -> dict:
 
     visualization_result = visualizer_builder.compile().invoke(visualizer_state)
     
-    # Extract results
-    file_path = visualization_result.get("file_path", "")
-    file_url = visualization_result.get("file_url", "")
+    # Extract HTML output
     html_output = visualization_result.get("html_output", "")
     
-    # Create a structured response that includes metadata for the frontend
-    # This allows Streamlit to parse and render appropriately
+    # Create response with embedded HTML only (no file paths)
     response_content = f"""📊 Visualization created!
-
-File: {file_path}
-Open in browser: {file_url}
 
 <!-- HTML_CONTENT_START -->
 {html_output}

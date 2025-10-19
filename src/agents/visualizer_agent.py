@@ -570,26 +570,21 @@ def generate_chartjs_html(chart_data: Dict, chart_type: str, title: str) -> str:
     return html
 
 def save_html_to_file(html_content: str, user_query: str) -> tuple[str, str]:
-    """Save HTML content to a file with timestamped filename."""
+    """
+    Return HTML content directly without saving to disk.
+    For Streamlit Cloud compatibility.
+    """
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    
-    # Clean query for filename (first 30 chars, alphanumeric only)
     safe_query = "".join(c if c.isalnum() or c in (' ', '-', '_') else '_' for c in user_query[:30])
     safe_query = safe_query.strip().replace(' ', '_')
     
     filename = f"viz_{timestamp}_{safe_query}.html"
-    file_path = VISUALIZATIONS_DIR / filename
     
-    # Save HTML to file
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(html_content)
+    print(f"   ✅ Generated visualization: {filename}")
     
-    print(f"   ✅ Saved visualization to: {file_path.name}")
-    
-    # Generate relative URL for browser access
-    relative_url = f"data/visualizations/{filename}"
-    
-    return str(file_path.absolute()), relative_url
+    # Return empty paths since we're using in-memory rendering
+    # The HTML content is already in state["html_output"]
+    return "", filename
 
 # =============================================================================
 # NODE IMPLEMENTATIONS
